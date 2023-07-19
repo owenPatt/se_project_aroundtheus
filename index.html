@@ -10,7 +10,11 @@
   <body class="page">
     <div class="page__content">
       <header class="header page__section">
-        <img src="./images/logo.svg" alt="Around the US logo" />
+        <img
+          class="header__logo"
+          src="./images/logo.svg"
+          alt="Around the US logo"
+        />
       </header>
       <main class="content">
         <section class="profile page__section">
@@ -21,10 +25,19 @@
           />
           <div class="profile__info">
             <h1 class="profile__title">Jacques Cousteau</h1>
-            <button class="profile__edit-button"></button>
+            <button
+              aria-label="Edit Button"
+              type="button"
+              class="profile__edit-button"
+            ></button>
+            <div class="profile__break"></div>
             <p class="profile__description">Explorer</p>
           </div>
-          <button class="profile__add-button"></button>
+          <button
+            aria-label="Add Button"
+            type="button"
+            class="profile__add-button"
+          ></button>
         </section>
         <section class="cards">
           <ul class="cards__list">
@@ -36,7 +49,11 @@
               />
               <div class="card__description">
                 <h2 class="card__title">Lake Louise</h2>
-                <button class="card__like-button"></button>
+                <button
+                  aria-label="Like Button"
+                  type="button"
+                  class="card__like-button"
+                ></button>
               </div>
             </li>
             <li class="card">
@@ -47,7 +64,11 @@
               />
               <div class="card__description">
                 <h2 class="card__title">Yosemite Valley</h2>
-                <button class="card__like-button"></button>
+                <button
+                  aria-label="Like Button"
+                  type="button"
+                  class="card__like-button"
+                ></button>
               </div>
             </li>
             <li class="card">
@@ -58,7 +79,11 @@
               />
               <div class="card__description">
                 <h2 class="card__title">Bald Mountains</h2>
-                <button class="card__like-button"></button>
+                <button
+                  aria-label="Like Button"
+                  type="button"
+                  class="card__like-button"
+                ></button>
               </div>
             </li>
             <li class="card">
@@ -69,7 +94,11 @@
               />
               <div class="card__description">
                 <h2 class="card__title">Latemar</h2>
-                <button class="card__like-button"></button>
+                <button
+                  aria-label="Like Button"
+                  type="button"
+                  class="card__like-button"
+                ></button>
               </div>
             </li>
             <li class="card">
@@ -80,7 +109,11 @@
               />
               <div class="card__description">
                 <h2 class="card__title">Vanoise National Park</h2>
-                <button class="card__like-button"></button>
+                <button
+                  aria-label="Like Button"
+                  type="button"
+                  class="card__like-button"
+                ></button>
               </div>
             </li>
             <li class="card">
@@ -91,14 +124,18 @@
               />
               <div class="card__description">
                 <h2 class="card__title">Lago Di Braies</h2>
-                <button class="card__like-button"></button>
+                <button
+                  aria-label="Like Button"
+                  type="button"
+                  class="card__like-button"
+                ></button>
               </div>
             </li>
           </ul>
         </section>
-        <section class="footer page__section">
+        <footer class="footer page__section">
           <p class="footer__description">© 2022 Around The U.S.</p>
-        </section>
+        </footer>
       </main>
     </div>
   </body>
