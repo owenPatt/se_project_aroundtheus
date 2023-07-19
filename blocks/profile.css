@@ -32,6 +32,7 @@
   margin-left: auto;
   cursor: pointer;
   border: 2px #ffffff solid;
+  border-radius: 2px;
 }
 
 .profile__add-button:hover {
@@ -88,6 +89,7 @@
     flex-wrap: wrap;
     justify-content: center;
     width: 100%;
+    max-width: 450px;
     gap: 14px 10px;
   }
 
@@ -102,7 +104,7 @@
 
   .profile__add-button {
     margin: 36px 0 0;
-    width: 90%;
+    width: 282px;
   }
 }
 
@@ -117,16 +119,17 @@
     width: 100%;
     font-size: 16px;
   }
-
-  .profile__add-button {
-    width: 85%;
-  }
 }
 
 @media screen and (max-width: 480px) {
   .profile__title {
     max-width: 200px;
     font-size: 22px;
+  }
+
+  .profile__edit-button {
+    width: 18px;
+    height: 18px;
   }
 
   .profile__description {
