@@ -11,6 +11,12 @@
   line-height: 1.2;
 }
 
+@media screen and (max-width: 880px) and (min-width: 661px) {
+  .footer {
+    margin: 58px auto 48px;
+  }
+}
+
 @media screen and (max-width: 660px) {
   .footer {
     margin: 48px auto 36px;
