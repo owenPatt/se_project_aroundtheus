@@ -44,7 +44,6 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
-  font-family: "Inter", "Arial", sans-serif;
   font-size: 42px;
   line-height: 1.2;
   font-weight: 500;
@@ -57,7 +56,6 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
-  font-family: "Inter", "Arial", sans-serif;
   font-size: 18px;
   line-height: 1.2;
   font-weight: 400;
