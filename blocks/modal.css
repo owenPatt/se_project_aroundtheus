@@ -43,7 +43,11 @@
   height: 40px;
 }
 
-.model__heading {
+.modal__close:hover {
+  opacity: 0.6;
+}
+
+.modal__heading {
   color: black;
   margin: 0;
   font-weight: 900;
@@ -76,9 +80,15 @@
   height: 50px;
   background-color: #000;
   color: #fff;
+  border-radius: 2px;
   font-size: 18px;
   font-weight: 400;
   line-height: 1.2;
+  cursor: pointer;
+}
+
+.modal__button:hover {
+  opacity: 0.8;
 }
 
 @media screen and (max-width: 660px) {
