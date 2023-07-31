@@ -29,6 +29,7 @@
               aria-label="Edit Button"
               type="button"
               class="profile__edit-button"
+              id="profile-edit-button"
             ></button>
             <p class="profile__description">Explorer</p>
           </div>
@@ -138,13 +139,13 @@
       </footer>
     </div>
 
-    <div class="modal">
+    <div class="modal" id="profile-edit-modal">
       <div class="modal__container">
-        <button class="modal__close"></button>
+        <button class="modal__close" id="profile-modal-close-button"></button>
         <h2 class="modal__heading">Edit Profile</h2>
         <form class="modal__form">
-          <input type="text" name="title" placeholder="Jacques Cousteau" class="modal__item">
-          <input type="text" name="description" placeholder="Explorer" class="modal__item">
+          <input type="text" name="title" placeholder="Name" class="modal__item">
+          <input type="text" name="description" placeholder="Description" class="modal__item">
           <button type="button" class="modal__button">Save</button>
         </form>
       </div>
