@@ -82,7 +82,9 @@ profileEditBtn.addEventListener("click", () => {
 });
 
 //Closes the profile editor modal when exit button is pressed
-profileModalCloseBtn.addEventListener("click", closeModal);
+profileModalCloseBtn.addEventListener("click", () => {
+  closeModal(profileEditModal);
+});
 
 //Saves the profile editor modal when save button is pressed
 //Grabs input values and puts that into the profile
