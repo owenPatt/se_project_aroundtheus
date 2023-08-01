@@ -39,11 +39,39 @@ const profileModalSaveBtn = profileEditModal.querySelector("#profile-modal-save-
 const profileModalNameInput = profileEditModal.querySelector("#profile-modal-name-input");
 const profileModalDescriptionInput = profileEditModal.querySelector("#profile-modal-description-input");
 
+//card elements
+const cardTemplate = document.querySelector("#card-template").content.firstElementChild;
+const cardList = document.querySelector('.cards__list');
+
 //***Functions***
 //Takes a modal and removes the modal_opened css class
 function closeModal(modal){
   modal.classList.remove("modal_opened");
 }
+
+//Grabs the card element and sets values equal to data given
+function getCardElement(data){
+  //grabs template and card elements
+  const cardElement = cardTemplate.cloneNode(true);
+  const cardImageEl = cardElement.querySelector('.card__image');
+  const cardTitleEl = cardElement.querySelector('.card__title');
+  //sets image src and alt
+  cardImageEl.src = data.link;
+  cardImageEl.alt = data.name;
+  //sets title of card
+  cardTitleEl.textContent = data.name;
+  return cardElement;
+}
+
+//***Event Handlers
+function handleProfileEditSubmit(e){
+  //stops refreshing
+  e.preventDefault();
+  profileTitle.innerText = profileModalNameInput.value;
+  profileDescription.innerText = profileModalDescriptionInput.value;
+  closeModal(profileEditModal);
+}
+
 
 //***Event Listeners***
 //Brings up the profile editor modal with default values inplace
@@ -54,17 +82,12 @@ profileEditBtn.addEventListener("click", () => {
 });
 
 //Closes the profile editor modal when exit button is pressed
-profileModalCloseBtn.addEventListener("click", () => {
-  closeModal(profileEditModal);
-});
+profileModalCloseBtn.addEventListener("click", closeModal);
 
 //Saves the profile editor modal when save button is pressed
 //Grabs input values and puts that into the profile
-profileEditModal.addEventListener("submit", (e) =>{
-  //stops refreshing
-  e.preventDefault();
+profileEditModal.addEventListener("submit", handleProfileEditSubmit);
 
-  profileTitle.innerText = profileModalNameInput.value;
-  profileDescription.innerText = profileModalDescriptionInput.value;
-  closeModal(profileEditModal);
+initialCards.forEach((cardData) => {
+  cardList.insertAdjacentElement("beforeend", getCardElement(cardData));
 });
