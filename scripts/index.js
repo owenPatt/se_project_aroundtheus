@@ -25,16 +25,46 @@ let initialCards = [
   },
 ];
 
-//Elements
-const profileEditBtn = document.querySelector("#profile-edit-button");
-const profileModalCloseBtn = document.querySelector("#profile-modal-close-button");
-const profileEditModal = document.querySelector("#profile-edit-modal");
+//***Elements***
+//Profile elements
+const profile = document.querySelector("#profile")
+const profileEditBtn = profile.querySelector("#profile-edit-button");
+const profileTitle = profile.querySelector("#profile-title");
+const profileDescription = profile.querySelector("#profile-description");
 
-//Event Listeners
+//modal elements
+const profileEditModal = document.querySelector("#profile-edit-modal");
+const profileModalCloseBtn = profileEditModal.querySelector("#profile-modal-close-button");
+const profileModalSaveBtn = profileEditModal.querySelector("#profile-modal-save-button");
+const profileModalNameInput = profileEditModal.querySelector("#profile-modal-name-input");
+const profileModalDescriptionInput = profileEditModal.querySelector("#profile-modal-description-input");
+
+//***Functions***
+//Takes a modal and removes the modal_opened css class
+function closeModal(modal){
+  modal.classList.remove("modal_opened");
+}
+
+//***Event Listeners***
+//Brings up the profile editor modal with default values inplace
 profileEditBtn.addEventListener("click", () => {
+  profileModalNameInput.value = profileTitle.innerText;
+  profileModalDescriptionInput.value = profileDescription.innerText;
   profileEditModal.classList.add("modal_opened");
 });
 
+//Closes the profile editor modal when exit button is pressed
 profileModalCloseBtn.addEventListener("click", () => {
-  profileEditModal.classList.remove("modal_opened");
+  closeModal(profileEditModal);
+});
+
+//Saves the profile editor modal when save button is pressed
+//Grabs input values and puts that into the profile
+profileEditModal.addEventListener("submit", (e) =>{
+  //stops refreshing
+  e.preventDefault();
+
+  profileTitle.innerText = profileModalNameInput.value;
+  profileDescription.innerText = profileModalDescriptionInput.value;
+  closeModal(profileEditModal);
 });
