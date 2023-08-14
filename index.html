@@ -37,6 +37,7 @@
             aria-label="Add Button"
             type="button"
             class="profile__add-button"
+            id="add-card-button"
           ></button>
         </section>
         <section class="cards">
@@ -49,6 +50,7 @@
       </footer>
     </div>
 
+    <!-- Modals -->
     <div class="modal" id="profile-edit-modal">
       <div class="modal__container">
         <button class="modal__close" id="profile-modal-close-button"></button>
@@ -61,9 +63,34 @@
       </div>
     </div>
 
+    <div class="modal" id="card-add-modal">
+      <div class="modal__container">
+        <button class="modal__close" id="card-modal-close-button"></button>
+        <h2 class="modal__heading">New Places</h2>
+        <form class="modal__form">
+          <input type="text" name="title" placeholder="Title" class="modal__item" id="add-card-modal-title-input">
+          <input type="text" name="description" placeholder="Image link" class="modal__item" id="add-card-modal-image-link-input">
+          <button type="submit" class="modal__button" id="profile-modal-save-button">Create</button>
+        </form>
+      </div>
+    </div>
+
+    <div class="modal" id="picture-modal">
+      <div class="modal__container_picture">
+        <button class="modal__close" id="picture-modal-close-button"></button>
+        <img src="" alt="" id="picture-modal-image" class="modal__image">
+        <h2 class="modal__title" id="picture-modal-title"></h2>
+      </div>
+    </div>
+
     <!-- Templates -->
     <template id="card-template">
       <li class="card">
+        <button
+            aria-label="Delete Button"
+            type="button"
+            class="card__delete-button"
+        ></button>
         <img
           class="card__image"
           src=""
