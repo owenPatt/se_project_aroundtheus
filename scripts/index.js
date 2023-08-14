@@ -1,4 +1,4 @@
-let initialCards = [
+const initialCards = [
   {
     name: "Yosemite Valley",
     link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/yosemite.jpg",
@@ -49,6 +49,7 @@ const addCardModal = document.querySelector("#card-add-modal");
 const cardModalCloseBtn = addCardModal.querySelector("#card-modal-close-button");
 const cardModalTitleInput = addCardModal.querySelector("#add-card-modal-title-input");
 const cardModalImageInput = addCardModal.querySelector("#add-card-modal-image-link-input");
+const cardModalForm = addCardModal.querySelector("#card-modal-form");
 
 //Picture Modal elements
 const pictureModal = document.querySelector("#picture-modal");
@@ -65,10 +66,9 @@ function openModal(modal){
   modal.classList.add("modal_opened");
 }
 
-function clearFormValues(...formInputs) {
-  formInputs.forEach((input) =>{
-    input.value = "";
-  });
+function fillProfileForm(){
+  profileModalNameInput.value = profileTitle.textContent;
+  profileModalDescriptionInput.value = profileDescription.textContent;
 }
 
 //Grabs the card element and sets values equal to data given
@@ -103,14 +103,14 @@ function getCardElement(data){
 //***Event Handlers***
 function handleProfileEditSubmit(e){
   e.preventDefault();
-  profileTitle.innerText = profileModalNameInput.value;
-  profileDescription.innerText = profileModalDescriptionInput.value;
+  profileTitle.textContent = profileModalNameInput.value;
+  profileDescription.textContent = profileModalDescriptionInput.value;
   closeModal(profileEditModal);
 }
 
 function handleAddCardModalSubmit(e){
   e.preventDefault();
-  let cardData =
+  const cardData =
   {
     name: cardModalTitleInput.value,
     link: cardModalImageInput.value,
@@ -126,7 +126,6 @@ profileModalCloseBtn.addEventListener("click", () => {
   closeModal(profileEditModal);
 });
 cardModalCloseBtn.addEventListener("click", () =>{
-  clearFormValues(cardModalTitleInput, cardModalImageInput);
   closeModal(addCardModal);
 });
 pictureModalCloseBtn.addEventListener("click", () =>{
@@ -134,13 +133,12 @@ pictureModalCloseBtn.addEventListener("click", () =>{
 });
 
 profileEditBtn.addEventListener("click", () => {
-  profileModalNameInput.value = profileTitle.innerText;
-  profileModalDescriptionInput.value = profileDescription.innerText;
+  fillProfileForm();
   openModal(profileEditModal);
 });
 
 addCardBtn.addEventListener("click", () => {
-  clearFormValues(cardModalTitleInput, cardModalImageInput);
+  cardModalForm.reset();
   openModal(addCardModal);
 });
 
