@@ -65,6 +65,12 @@ function openModal(modal){
   modal.classList.add("modal_opened");
 }
 
+function clearFormValues(...formInputs) {
+  formInputs.forEach((input) =>{
+    input.value = "";
+  });
+}
+
 //Grabs the card element and sets values equal to data given
 function getCardElement(data){
   const cardElement = cardTemplate.cloneNode(true);
@@ -120,6 +126,7 @@ profileModalCloseBtn.addEventListener("click", () => {
   closeModal(profileEditModal);
 });
 cardModalCloseBtn.addEventListener("click", () =>{
+  clearFormValues(cardModalTitleInput, cardModalImageInput);
   closeModal(addCardModal);
 });
 pictureModalCloseBtn.addEventListener("click", () =>{
@@ -133,6 +140,7 @@ profileEditBtn.addEventListener("click", () => {
 });
 
 addCardBtn.addEventListener("click", () => {
+  clearFormValues(cardModalTitleInput, cardModalImageInput);
   openModal(addCardModal);
 });
 
