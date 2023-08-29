@@ -1,4 +1,4 @@
-.modal{
+.modal {
   position: fixed;
   top: 0;
   left: 0;
@@ -13,6 +13,7 @@
   visibility: hidden;
   opacity: 0;
   transition: visibility 0.3s, opacity 0.3s linear;
+  cursor: pointer;
 }
 
 .modal_opened {
@@ -31,6 +32,7 @@
   max-width: 358px;
   width: 100%;
   height: 256px;
+  cursor: default;
 }
 
 .modal__picture-container {
@@ -77,7 +79,6 @@
 .modal__form {
   display: flex;
   flex-direction: column;
-  gap: 30px;
 }
 
 .modal__item {
@@ -86,12 +87,31 @@
   height: 27px;
   border: none;
   border-bottom: 1px solid #000;
+  width: 100%;
 }
 
 .modal__item::placeholder {
   font-weight: 400;
   font-size: 14px;
   line-height: 1.2;
+}
+
+.modal__item_type_error {
+  border-bottom: 1px solid #ff0000;
+}
+
+.modal__error {
+  display: block;
+  width: 100%;
+  height: 30px;
+  color: #ff0000;
+  font-weight: 400;
+  font-size: 12px;
+  opacity: 0;
+}
+
+.modal__error_visible {
+  opacity: 100;
 }
 
 .modal__button {
@@ -107,8 +127,20 @@
   border: none;
 }
 
+.modal__button_disabled {
+  cursor: default;
+  background-color: white;
+  opacity: 0.2;
+  border: 1px black solid;
+  color: black;
+}
+
 .modal__button:hover {
   opacity: 0.8;
+}
+
+.modal__button_disabled:hover {
+  opacity: 0.2;
 }
 
 @media screen and (max-width: 660px) {

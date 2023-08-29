@@ -31,7 +31,7 @@
               class="profile__edit-button"
               id="profile-edit-button"
             ></button>
-            <p class="profile__description" id="profile-description">Explorer</p>
+            <p class="profile__description" id="profile-description">Explore</p>
           </div>
           <button
             aria-label="Add Button"
@@ -41,8 +41,7 @@
           ></button>
         </section>
         <section class="cards">
-          <ul class="cards__list">
-          </ul>
+          <ul class="cards__list"></ul>
         </section>
       </main>
       <footer class="footer page__section">
@@ -56,9 +55,45 @@
         <button class="modal__close" id="profile-modal-close-button"></button>
         <h2 class="modal__heading">Edit Profile</h2>
         <form class="modal__form">
-          <input type="text" name="title" placeholder="Name" class="modal__item" id="profile-modal-name-input">
-          <input type="text" name="description" placeholder="Description" class="modal__item" id="profile-modal-description-input">
-          <button type="submit" class="modal__button" id="profile-modal-save-button">Save</button>
+          <label>
+            <input
+              type="text"
+              name="title"
+              placeholder="Name"
+              class="modal__item"
+              id="profile-modal-name-input"
+              minlength="2"
+              maxlength="40"
+              required
+            />
+            <span
+              class="modal__error"
+              id="profile-modal-name-input-error"
+            ></span>
+          </label>
+          <label>
+            <input
+              type="text"
+              name="description"
+              placeholder="Description"
+              class="modal__item"
+              id="profile-modal-description-input"
+              minlength="2"
+              maxlength="200"
+              required
+            />
+            <span
+              class="modal__error"
+              id="profile-modal-description-input-error"
+            ></span>
+          </label>
+          <button
+            type="submit"
+            class="modal__button"
+            id="profile-modal-save-button"
+          >
+            Save
+          </button>
         </form>
       </div>
     </div>
@@ -68,9 +103,43 @@
         <button class="modal__close" id="card-modal-close-button"></button>
         <h2 class="modal__heading">New Places</h2>
         <form class="modal__form" id="card-modal-form">
-          <input type="text" name="title" placeholder="Title" class="modal__item" id="add-card-modal-title-input">
-          <input type="url" name="description" placeholder="Image link" class="modal__item" id="add-card-modal-image-link-input">
-          <button type="submit" class="modal__button" id="card-modal-save-button">Create</button>
+          <label>
+            <input
+              type="text"
+              name="title"
+              placeholder="Title"
+              class="modal__item"
+              id="add-card-modal-title-input"
+              required
+              minlength="1"
+              maxlength="30"
+            />
+            <span
+              class="modal__error"
+              id="add-card-modal-title-input-error"
+            ></span>
+          </label>
+          <label>
+            <input
+              type="url"
+              name="description"
+              placeholder="Image link"
+              class="modal__item"
+              id="add-card-modal-image-link-input"
+              required
+            />
+            <span
+              class="modal__error"
+              id="add-card-modal-image-link-input-error"
+            ></span>
+          </label>
+          <button
+            type="submit"
+            class="modal__button"
+            id="card-modal-save-button"
+          >
+            Create
+          </button>
         </form>
       </div>
     </div>
@@ -78,7 +147,7 @@
     <div class="modal" id="picture-modal">
       <div class="modal__picture-container">
         <button class="modal__close" id="picture-modal-close-button"></button>
-        <img src="#" alt="" id="picture-modal-image" class="modal__image">
+        <img src="#" alt="" id="picture-modal-image" class="modal__image" />
         <h2 class="modal__title" id="picture-modal-title"></h2>
       </div>
     </div>
@@ -87,15 +156,11 @@
     <template id="card-template">
       <li class="card">
         <button
-            aria-label="Delete Button"
-            type="button"
-            class="card__delete-button"
+          aria-label="Delete Button"
+          type="button"
+          class="card__delete-button"
         ></button>
-        <img
-          class="card__image"
-          src=""
-          alt=""
-        />
+        <img class="card__image" src="" alt="" />
         <div class="card__description">
           <h2 class="card__title"></h2>
           <button
@@ -108,5 +173,6 @@
     </template>
 
     <script src="scripts/index.js" defer></script>
+    <script src="scripts/validation.js" defer></script>
   </body>
 </html>
