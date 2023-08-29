@@ -25,7 +25,9 @@ const initialCards = [
   },
 ];
 
-//***Elements***
+/************
+ * ELEMENTS *
+ ************/
 //Profile elements
 const profile = document.querySelector("#profile");
 const profileEditBtn = profile.querySelector("#profile-edit-button");
@@ -74,7 +76,9 @@ const pictureModalCloseBtn = pictureModal.querySelector(
 const pictureModalImage = pictureModal.querySelector("#picture-modal-image");
 const pictureModalTitle = pictureModal.querySelector("#picture-modal-title");
 
-//***Functions***
+/*************
+ * FUNCTIONS *
+ *************/
 function closeModal(modal) {
   modal.classList.remove("modal_opened");
 }
@@ -95,7 +99,9 @@ function fillProfileForm() {
   profileModalDescriptionInput.value = profileDescription.textContent;
 }
 
-//Grabs the card element and sets values equal to data given
+/**************************************************************
+ * GRABS THE CARD ELEMENT AND SETS VALUES EQUAL TO DATA GIVEN *
+ **************************************************************/
 function getCardElement(data) {
   const cardElement = cardTemplate.cloneNode(true);
   const cardImageEl = cardElement.querySelector(".card__image");
@@ -124,7 +130,9 @@ function getCardElement(data) {
   return cardElement;
 }
 
-//***Event Handlers***
+/******************
+ * EVENT HANDLERS *
+ ******************/
 function handleProfileEditSubmit(e) {
   e.preventDefault();
   profileTitle.textContent = profileModalNameInput.value;
@@ -158,8 +166,9 @@ function handleDocumentKeyDown(e) {
   }
 }
 
-//***Event Listeners***
-
+/*******************
+ * EVENT LISTENERS *
+ *******************/
 //Modal Close Buttons
 profileModalCloseBtn.addEventListener("click", () => {
   closeModal(profileEditModal);
