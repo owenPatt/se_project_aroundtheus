@@ -79,6 +79,13 @@ function closeModal(modal) {
   modal.classList.remove("modal_opened");
 }
 
+function classAllModals() {
+  const modalEls = Array.from(document.querySelectorAll(".modal"));
+  modalEls.forEach((modalEl) => {
+    modalEl.classList.remove("modal_opened");
+  });
+}
+
 function openModal(modal) {
   modal.classList.add("modal_opened");
 }
@@ -136,16 +143,18 @@ function handleAddCardModalSubmit(e) {
 }
 
 function handleModalClick(e) {
-  if (e.target === addCardModal) {
-    closeModal(addCardModal);
-  } else if (e.target === profileEditModal) {
-    closeModal(profileEditModal);
+  if (
+    e.target === addCardModal ||
+    e.target === profileEditModal ||
+    e.target === pictureModal
+  ) {
+    closeModal(e.target);
   }
 }
 
-function handleModalKeyDown(e) {
+function handleDocumentKeyDown(e) {
   if (e.key === "Escape") {
-    closeModal(e.currentTarget);
+    classAllModals();
   }
 }
 
@@ -164,9 +173,9 @@ pictureModalCloseBtn.addEventListener("click", () => {
 
 addCardModal.addEventListener("click", handleModalClick);
 profileEditModal.addEventListener("click", handleModalClick);
+pictureModal.addEventListener("click", handleModalClick);
 
-addCardModal.addEventListener("keydown", handleModalKeyDown);
-profileEditModal.addEventListener("keydown", handleModalKeyDown);
+document.addEventListener("keydown", handleDocumentKeyDown);
 
 profileEditBtn.addEventListener("click", () => {
   fillProfileForm();
