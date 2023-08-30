@@ -56,6 +56,8 @@ function setEventListeners(formEl, config) {
   const inputEls = [...formEl.querySelectorAll(inputSelector)];
   const submitButton = formEl.querySelector(submitButtonSelector);
 
+  toggleButtonState(inputEls, submitButton, config);
+
   // loop through all the inputs to see if all are valid
   // Checks button state
   inputEls.forEach((inputEl) => {

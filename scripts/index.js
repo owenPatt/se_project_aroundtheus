@@ -1,3 +1,5 @@
+//
+
 const initialCards = [
   {
     name: "Yosemite Valley",
@@ -33,6 +35,9 @@ const profile = document.querySelector("#profile");
 const profileEditBtn = profile.querySelector("#profile-edit-button");
 const profileTitle = profile.querySelector("#profile-title");
 const profileDescription = profile.querySelector("#profile-description");
+
+//All modal elements array
+const modalEls = Array.from(document.querySelectorAll(".modal"));
 
 //profile modal elements
 const profileEditModal = document.querySelector("#profile-edit-modal");
@@ -81,17 +86,16 @@ const pictureModalTitle = pictureModal.querySelector("#picture-modal-title");
  *************/
 function closeModal(modal) {
   modal.classList.remove("modal_opened");
+  document.removeEventListener("keydown", handleDocumentKeyDown);
 }
 
-function classAllModals() {
-  const modalEls = Array.from(document.querySelectorAll(".modal"));
-  modalEls.forEach((modalEl) => {
-    modalEl.classList.remove("modal_opened");
-  });
+function closeAllModals() {
+  modalEls.forEach(closeModal);
 }
 
 function openModal(modal) {
   modal.classList.add("modal_opened");
+  document.addEventListener("keydown", handleDocumentKeyDown);
 }
 
 function fillProfileForm() {
@@ -114,7 +118,7 @@ function getCardElement(data) {
   });
 
   deleteBtn.addEventListener("click", () => {
-    deleteBtn.parentElement.remove();
+    deleteBtn.closest(".card").remove();
   });
 
   cardImageEl.addEventListener("click", () => {
@@ -151,40 +155,30 @@ function handleAddCardModalSubmit(e) {
 }
 
 function handleModalClick(e) {
-  if (
-    e.target === addCardModal ||
-    e.target === profileEditModal ||
-    e.target === pictureModal
-  ) {
+  if (e.target === e.currentTarget) {
     closeModal(e.target);
   }
 }
 
 function handleDocumentKeyDown(e) {
   if (e.key === "Escape") {
-    classAllModals();
+    closeAllModals();
   }
 }
 
 /*******************
  * EVENT LISTENERS *
  *******************/
-//Modal Close Buttons
-profileModalCloseBtn.addEventListener("click", () => {
-  closeModal(profileEditModal);
+modalEls.forEach((modal) => {
+  modal.addEventListener("mousedown", (e) => {
+    //Allows the overlay and close button to close the modal
+    if (e.target.classList.contains("modal_opened")) {
+      closeModal(modal);
+    } else if (e.target.classList.contains("modal__close")) {
+      closeModal(modal);
+    }
+  });
 });
-cardModalCloseBtn.addEventListener("click", () => {
-  closeModal(addCardModal);
-});
-pictureModalCloseBtn.addEventListener("click", () => {
-  closeModal(pictureModal);
-});
-
-addCardModal.addEventListener("click", handleModalClick);
-profileEditModal.addEventListener("click", handleModalClick);
-pictureModal.addEventListener("click", handleModalClick);
-
-document.addEventListener("keydown", handleDocumentKeyDown);
 
 profileEditBtn.addEventListener("click", () => {
   fillProfileForm();
@@ -192,7 +186,6 @@ profileEditBtn.addEventListener("click", () => {
 });
 
 addCardBtn.addEventListener("click", () => {
-  cardModalForm.reset();
   openModal(addCardModal);
 });
 
