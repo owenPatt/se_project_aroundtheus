@@ -96,15 +96,16 @@ function closeAllModals() {
 function openModal(modal) {
   //Checks for input errors when modals are opened
   const formEl = modal.querySelector(".modal__form");
-  const inputEls = [...formEl.querySelectorAll(".modal__item")];
-  const submitButtonEl = formEl.querySelector(".modal__button");
+  if (formEl) {
+    const inputEls = [...formEl.querySelectorAll(".modal__item")];
+    const submitButtonEl = formEl.querySelector(".modal__button");
 
-  toggleButtonState(inputEls, submitButtonEl, config);
+    toggleButtonState(inputEls, submitButtonEl, config);
 
-  inputEls.forEach((inputEl) => {
-    checkInputValidity(formEl, inputEl, config);
-  });
-
+    inputEls.forEach((inputEl) => {
+      checkInputValidity(formEl, inputEl, config);
+    });
+  }
   //opens the modal
   modal.classList.add("modal_opened");
   document.addEventListener("keydown", handleDocumentKeyDown);
