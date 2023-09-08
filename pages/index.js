@@ -1,5 +1,7 @@
 //
 
+import Card from "../components/Card.js";
+
 const initialCards = [
   {
     name: "Yosemite Valley",
@@ -81,6 +83,39 @@ const pictureModalCloseBtn = pictureModal.querySelector(
 const pictureModalImage = pictureModal.querySelector("#picture-modal-image");
 const pictureModalTitle = pictureModal.querySelector("#picture-modal-title");
 
+/******************
+ * EVENT HANDLERS *
+ ******************/
+function handleProfileEditSubmit(e) {
+  e.preventDefault();
+  profileTitle.textContent = profileModalNameInput.value;
+  profileDescription.textContent = profileModalDescriptionInput.value;
+  closeModal(profileEditModal);
+}
+
+function handleAddCardModalSubmit(e) {
+  e.preventDefault();
+  const cardData = {
+    name: cardModalTitleInput.value,
+    link: cardModalImageInput.value,
+  };
+  cardList.insertAdjacentElement("afterbegin", getCardElement(cardData));
+  closeModal(addCardModal);
+}
+
+function handleDocumentKeyDown(e) {
+  if (e.key === "Escape") {
+    closeAllModals();
+  }
+}
+
+function handleCardImageClick(cardObject) {
+  pictureModalImage.src = cardObject._link;
+  pictureModalImage.alt = cardObject._name;
+  pictureModalTitle.textContent = cardObject._name;
+  openModal(pictureModal);
+}
+
 /*************
  * FUNCTIONS *
  *************/
@@ -103,72 +138,10 @@ function fillProfileForm() {
   profileModalDescriptionInput.value = profileDescription.textContent;
 }
 
-/**************************************************************
- * GRABS THE CARD ELEMENT AND SETS VALUES EQUAL TO DATA GIVEN *
- **************************************************************/
-function getCardElement(data) {
-  const cardElement = cardTemplate.cloneNode(true);
-  const cardImageEl = cardElement.querySelector(".card__image");
-  const cardTitleEl = cardElement.querySelector(".card__title");
-  const likeBtn = cardElement.querySelector(".card__like-button");
-  const deleteBtn = cardElement.querySelector(".card__delete-button");
-
-  likeBtn.addEventListener("click", () => {
-    likeBtn.classList.toggle("card__like-button_active");
-  });
-
-  deleteBtn.addEventListener("click", () => {
-    deleteBtn.closest(".card").remove();
-  });
-
-  cardImageEl.addEventListener("click", () => {
-    pictureModalImage.src = data.link;
-    pictureModalImage.alt = data.name;
-    pictureModalTitle.textContent = data.name;
-    openModal(pictureModal);
-  });
-
-  cardImageEl.src = data.link;
-  cardImageEl.alt = data.name;
-  cardTitleEl.textContent = data.name;
-  return cardElement;
-}
-
-/******************
- * EVENT HANDLERS *
- ******************/
-function handleProfileEditSubmit(e) {
-  e.preventDefault();
-  profileTitle.textContent = profileModalNameInput.value;
-  profileDescription.textContent = profileModalDescriptionInput.value;
-  closeModal(profileEditModal);
-}
-
-function handleAddCardModalSubmit(e) {
-  e.preventDefault();
-  const cardData = {
-    name: cardModalTitleInput.value,
-    link: cardModalImageInput.value,
-  };
-  cardList.insertAdjacentElement("afterbegin", getCardElement(cardData));
-  closeModal(addCardModal);
-}
-
-function handleModalClick(e) {
-  if (e.target === e.currentTarget) {
-    closeModal(e.target);
-  }
-}
-
-function handleDocumentKeyDown(e) {
-  if (e.key === "Escape") {
-    closeAllModals();
-  }
-}
-
 /*******************
  * EVENT LISTENERS *
  *******************/
+//Sets Listeners for modal closes
 modalEls.forEach((modal) => {
   modal.addEventListener("mousedown", (e) => {
     //Allows the overlay and close button to close the modal
@@ -195,5 +168,9 @@ profileEditModal.addEventListener("submit", handleProfileEditSubmit);
 
 //sets initial cards
 initialCards.forEach((cardData) => {
-  cardList.insertAdjacentElement("beforeend", getCardElement(cardData));
+  //Creates new card Object
+  const card = new Card(cardData, "#card-template", handleCardImageClick);
+
+  //Adds HTML
+  cardList.insertAdjacentElement("beforeend", card.getView());
 });
