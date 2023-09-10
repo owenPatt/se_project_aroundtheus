@@ -2,43 +2,7 @@
 
 import Card from "../components/Card.js";
 import FormValidator from "../components/FormValidator.js";
-
-const initialCards = [
-  {
-    name: "Yosemite Valley",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/yosemite.jpg",
-  },
-  {
-    name: "Lake Louise",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/lake-louise.jpg",
-  },
-  {
-    name: "Bald Mountains",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/bald-mountains.jpg",
-  },
-  {
-    name: "Latemar",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/latemar.jpg",
-  },
-  {
-    name: "Vanoise National Park",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/vanoise.jpg",
-  },
-  {
-    name: "Largo di Braies",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/lago.jpg",
-  },
-];
-
-const config = {
-  formSelector: ".modal__form",
-  inputSelector: ".modal__item",
-  submitButtonSelector: ".modal__button",
-  errorMessageClass: "modal__error",
-  inactiveButtonClass: "modal__button_disabled",
-  inputErrorClass: "modal__item_type_error",
-  errorMessageClassVisible: "modal__error_visible",
-};
+import { initialCards, validatorConfig } from "../components/constants.js";
 
 /************
  * ELEMENTS *
@@ -84,11 +48,11 @@ const pictureModalTitle = pictureModal.querySelector("#picture-modal-title");
  * FORM VALIDATORS *
  ******************/
 const profileModalFormValidator = new FormValidator(
-  config,
+  validatorConfig,
   document.querySelector("#profile-modal-form")
 );
 const cardModalFormValidator = new FormValidator(
-  config,
+  validatorConfig,
   document.querySelector("#card-modal-form")
 );
 
@@ -118,7 +82,8 @@ function handleAddCardModalSubmit(e) {
 
 function handleDocumentKeyDown(e) {
   if (e.key === "Escape") {
-    closeAllModals();
+    const openedModal = document.querySelector(".modal_opened");
+    closeModals(openedModal);
   }
 }
 
@@ -137,15 +102,7 @@ function closeModal(modal) {
   document.removeEventListener("keydown", handleDocumentKeyDown);
 }
 
-function closeAllModals() {
-  modalEls.forEach(closeModal);
-}
-
 function openModal(modal) {
-  //Checks current Validity of both forms
-  profileModalFormValidator.checkCurrentValidation();
-  cardModalFormValidator.checkCurrentValidation();
-
   //opens the modal
   modal.classList.add("modal_opened");
   document.addEventListener("keydown", handleDocumentKeyDown);
@@ -181,10 +138,12 @@ modalEls.forEach((modal) => {
 
 profileEditBtn.addEventListener("click", () => {
   fillProfileForm();
+  profileModalFormValidator.checkCurrentValidation();
   openModal(profileEditModal);
 });
 
 addCardBtn.addEventListener("click", () => {
+  cardModalFormValidator.checkCurrentValidation();
   openModal(addCardModal);
 });
 
@@ -196,9 +155,6 @@ profileEditModal.addEventListener("submit", handleProfileEditSubmit);
  * SETS INITIAL CARDS *
  **********************/
 initialCards.forEach((cardData) => {
-  //Creates new card Object
-  const card = new Card(cardData, "#card-template", handleCardImageClick);
-
-  //Adds HTML
-  cardList.insertAdjacentElement("beforeend", card.getView());
+  //Creates new card Object and adds to HTML
+  createNewCard(cardData);
 });

@@ -8,13 +8,13 @@ export default class Card {
     this._handleImageClick = handleImageClick;
   }
 
-  _handleLikeBtnClick(e) {
-    e.target.classList.toggle("card__like-button_active");
-  }
+  _handleLikeBtnClick = () => {
+    this._likeBtn.classList.toggle("card__like-button_active");
+  };
 
-  _handleDeleteBtnClick(e) {
-    e.target.closest(".card").remove();
-  }
+  _handleDeleteBtnClick = () => {
+    this._cardElement.remove();
+  };
 
   _setEventListeners() {
     //Adds listeners
