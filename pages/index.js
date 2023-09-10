@@ -142,19 +142,7 @@ function closeAllModals() {
 }
 
 function openModal(modal) {
-  /*//Checks for input errors when modals are opened
-  const formEl = modal.querySelector(".modal__form");
-  if (formEl) {
-    const inputEls = [...formEl.querySelectorAll(".modal__item")];
-    const submitButtonEl = formEl.querySelector(".modal__button");
-
-    toggleButtonState(inputEls, submitButtonEl, config);
-
-    inputEls.forEach((inputEl) => {
-      checkInputValidity(formEl, inputEl, config);
-    });
-  }*/
-
+  //Checks current Validity of both forms
   profileModalFormValidator.checkCurrentValidation();
   cardModalFormValidator.checkCurrentValidation();
 
