@@ -70,13 +70,13 @@ function handleProfileEditSubmit(e) {
 }
 
 function handleAddCardModalSubmit(e) {
-  cardModalForm.reset();
   const cardData = {
     name: cardModalTitleInput.value,
     link: cardModalImageInput.value,
   };
   createNewCard(cardData);
   closeModal(addCardModal);
+  cardModalForm.reset();
 }
 
 function handleDocumentKeyDown(e) {
@@ -111,7 +111,7 @@ function createNewCard(cardData) {
   const card = new Card(cardData, "#card-template", handleCardImageClick);
 
   //Adds HTML
-  cardList.insertAdjacentElement("beforeend", card.getView());
+  cardList.insertAdjacentElement("afterbegin", card.getView());
 }
 
 function fillProfileForm() {

@@ -41,6 +41,8 @@ export default class Card {
     this._setEventListeners();
 
     //Sets card values
+    console.log(this._link);
+    console.log(this._name);
     this._imageEl.src = this._link;
     this._imageEl.alt = this._name;
     this._titleEl.textContent = this._name;
