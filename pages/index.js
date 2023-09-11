@@ -2,7 +2,7 @@
 
 import Card from "../components/Card.js";
 import FormValidator from "../components/FormValidator.js";
-import { initialCards, validatorConfig } from "../components/constants.js";
+import { initialCards, validatorConfig } from "../utils/constants.js";
 
 /************
  * ELEMENTS *
@@ -70,7 +70,6 @@ function handleProfileEditSubmit(e) {
 }
 
 function handleAddCardModalSubmit(e) {
-  e.preventDefault();
   cardModalForm.reset();
   const cardData = {
     name: cardModalTitleInput.value,
@@ -103,7 +102,6 @@ function closeModal(modal) {
 }
 
 function openModal(modal) {
-  //opens the modal
   modal.classList.add("modal_opened");
   document.addEventListener("keydown", handleDocumentKeyDown);
 }
@@ -124,7 +122,7 @@ function fillProfileForm() {
 /*******************
  * EVENT LISTENERS *
  *******************/
-//Sets Listeners for modal closes
+//Set all modals to close
 modalEls.forEach((modal) => {
   modal.addEventListener("mousedown", (e) => {
     //Allows the overlay and close button to close the modal
@@ -136,19 +134,23 @@ modalEls.forEach((modal) => {
   });
 });
 
+//Open Modals
 profileEditBtn.addEventListener("click", () => {
   fillProfileForm();
-  profileModalFormValidator.checkCurrentValidation();
+  profileModalFormValidator.setButtonState();
+  profileModalFormValidator.clearValidationErrors();
   openModal(profileEditModal);
 });
-
 addCardBtn.addEventListener("click", () => {
-  cardModalFormValidator.checkCurrentValidation();
+  cardModalFormValidator.setButtonState();
   openModal(addCardModal);
 });
 
-addCardModal.addEventListener("submit", handleAddCardModalSubmit);
-
+//Submit Modals
+addCardModal.addEventListener("submit", () => {
+  handleAddCardModalSubmit();
+  cardModalFormValidator.clearValidationErrors();
+});
 profileEditModal.addEventListener("submit", handleProfileEditSubmit);
 
 /**********************

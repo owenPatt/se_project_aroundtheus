@@ -68,11 +68,14 @@ export default class FormValidator {
     this._setEventListeners();
   }
 
-  checkCurrentValidation() {
-    //Disable State of button OR reset form validation
+  setButtonState() {
+    //Disable State of button
+    this._toggleButtonState();
+  }
+
+  clearValidationErrors() {
     this._inputEls.forEach((inputEl) => {
-      this._checkValidity(inputEl);
-      this._toggleButtonState();
+      this._hideInputError(inputEl);
     });
   }
 }
