@@ -82,7 +82,7 @@ function handleAddCardModalSubmit(e) {
 function handleDocumentKeyDown(e) {
   if (e.key === "Escape") {
     const openedModal = document.querySelector(".modal_opened");
-    closeModals(openedModal);
+    closeModal(openedModal);
   }
 }
 
