@@ -3,6 +3,7 @@
 import Card from "../components/Card.js";
 import FormValidator from "../components/FormValidator.js";
 import { initialCards, validatorConfig } from "../utils/constants.js";
+import Section from "../components/Section.js";
 
 /************
  * ELEMENTS *
@@ -59,6 +60,14 @@ const cardModalFormValidator = new FormValidator(
 profileModalFormValidator.enableValidation();
 cardModalFormValidator.enableValidation();
 
+/************
+ * SECTIONS *
+ ************/
+const cardSection = new Section(
+  { items: initialCards, renderer: createNewCard },
+  ".cards__list"
+);
+
 /******************
  * EVENT HANDLERS *
  ******************/
@@ -74,7 +83,7 @@ function handleAddCardModalSubmit(e) {
     name: cardModalTitleInput.value,
     link: cardModalImageInput.value,
   };
-  createNewCard(cardData);
+  cardSection.addItem(cardData);
   closeModal(addCardModal);
   cardModalForm.reset();
 }
@@ -156,7 +165,4 @@ profileEditModal.addEventListener("submit", handleProfileEditSubmit);
 /**********************
  * SETS INITIAL CARDS *
  **********************/
-initialCards.forEach((cardData) => {
-  //Creates new card Object and adds to HTML
-  createNewCard(cardData);
-});
+cardSection.renderItems();
