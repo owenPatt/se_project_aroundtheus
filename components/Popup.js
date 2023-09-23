@@ -3,12 +3,11 @@ export default class Popup {
     this._popupEl = document.querySelector(popupSelector);
   }
 
-  _handleEscClose() {
+  _handleEscClose = (e) => {
     if (e.key === "Escape") {
-      const openedModal = document.querySelector(".modal_opened");
-      closeModal(openedModal);
+      this.close();
     }
-  }
+  };
 
   open() {
     this._popupEl.classList.add("modal_opened");

@@ -6,6 +6,7 @@ import { initialCards, validatorConfig } from "../utils/constants.js";
 import Section from "../components/Section.js";
 import Popup from "../components/Popup.js";
 import PopupWithImage from "../components/PopupWithImage.js";
+import PopupWithForm from "../components/PopupWithForm.js";
 
 /************
  * ELEMENTS *
@@ -70,8 +71,14 @@ const cardSection = new Section(
 /**********
  * POPUPS *
  **********/
-const profilePopup = new Popup("#profile-edit-modal");
-const addCardPopup = new Popup("#card-add-modal");
+const profilePopup = new PopupWithForm(
+  "#profile-edit-modal",
+  handleProfileEditSubmit
+);
+const addCardPopup = new PopupWithForm(
+  "#card-add-modal",
+  handleAddCardModalSubmit
+);
 const picturePopup = new PopupWithImage("#picture-modal");
 
 profilePopup.setEventListeners();
@@ -89,13 +96,13 @@ function handleProfileEditSubmit(e) {
 }
 
 function handleAddCardModalSubmit(e) {
+  e.preventDefault();
   const cardData = {
     name: cardModalTitleInput.value,
     link: cardModalImageInput.value,
   };
   cardSection.addItem(cardData);
   addCardPopup.close();
-  cardModalForm.reset();
 }
 
 function handleCardImageClick(cardObject) {
@@ -110,7 +117,6 @@ function handleCardImageClick(cardObject) {
 function createNewCard(cardData) {
   //Creates new card Object
   const card = new Card(cardData, "#card-template", handleCardImageClick);
-
   //Adds HTML
   cardList.insertAdjacentElement("afterbegin", card.getView());
 }
@@ -132,15 +138,9 @@ profileEditBtn.addEventListener("click", () => {
 });
 addCardBtn.addEventListener("click", () => {
   cardModalFormValidator.setButtonState();
+  cardModalFormValidator.clearValidationErrors();
   addCardPopup.open();
 });
-
-//Submit Modals
-addCardModal.addEventListener("submit", () => {
-  handleAddCardModalSubmit();
-  cardModalFormValidator.clearValidationErrors();
-});
-profileEditModal.addEventListener("submit", handleProfileEditSubmit);
 
 /**********************
  * SETS INITIAL CARDS *
