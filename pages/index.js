@@ -5,6 +5,7 @@ import FormValidator from "../components/FormValidator.js";
 import { initialCards, validatorConfig } from "../utils/constants.js";
 import Section from "../components/Section.js";
 import Popup from "../components/Popup.js";
+import PopupWithImage from "../components/PopupWithImage.js";
 
 /************
  * ELEMENTS *
@@ -71,7 +72,7 @@ const cardSection = new Section(
  **********/
 const profilePopup = new Popup("#profile-edit-modal");
 const addCardPopup = new Popup("#card-add-modal");
-const picturePopup = new Popup("#picture-modal");
+const picturePopup = new PopupWithImage("#picture-modal");
 
 profilePopup.setEventListeners();
 addCardPopup.setEventListeners();
@@ -98,10 +99,8 @@ function handleAddCardModalSubmit(e) {
 }
 
 function handleCardImageClick(cardObject) {
-  pictureModalImage.src = cardObject._link;
-  pictureModalImage.alt = cardObject._name;
   pictureModalTitle.textContent = cardObject._name;
-  picturePopup.open();
+  picturePopup.open(cardObject._link, cardObject._name);
 }
 
 /*************
