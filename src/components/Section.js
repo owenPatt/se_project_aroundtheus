@@ -10,12 +10,12 @@ export default class Section {
     //renders all elements on the screen
     this._items.forEach((item) => {
       //renderer renders each individual element
-      this._renderer(item);
+      this.addItem(this._renderer(item));
     });
   }
 
-  addItem(item) {
-    //Adds it to the container and renders it
-    this._renderer(item);
+  addItem(element) {
+    //Adds it to the container
+    this._container.insertAdjacentElement("afterbegin", element);
   }
 }

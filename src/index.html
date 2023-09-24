@@ -53,7 +53,11 @@
       <div class="modal__container">
         <button class="modal__close" id="profile-modal-close-button"></button>
         <h2 class="modal__heading">Edit Profile</h2>
-        <form class="modal__form" id="profile-modal-form">
+        <form
+          class="modal__form"
+          id="profile-modal-form"
+          name="profile-modal-form"
+        >
           <label>
             <input
               type="text"
@@ -101,11 +105,11 @@
       <div class="modal__container">
         <button class="modal__close" id="card-modal-close-button"></button>
         <h2 class="modal__heading">New Places</h2>
-        <form class="modal__form" id="card-modal-form">
+        <form class="modal__form" id="card-modal-form" name="card-modal-form">
           <label>
             <input
               type="text"
-              name="title"
+              name="name"
               placeholder="Title"
               class="modal__item"
               id="add-card-modal-title-input"
@@ -121,7 +125,7 @@
           <label>
             <input
               type="url"
-              name="image-link"
+              name="link"
               placeholder="Image link"
               class="modal__item"
               id="add-card-modal-image-link-input"

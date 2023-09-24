@@ -32,34 +32,18 @@ const profileModalDescriptionInput = profileEditModal.querySelector(
 );
 
 //card elements
-const cardList = document.querySelector(".cards__list");
 const addCardBtn = document.querySelector("#add-card-button");
-
-//add card modal elements
-const addCardModal = document.querySelector("#card-add-modal");
-const cardModalTitleInput = addCardModal.querySelector(
-  "#add-card-modal-title-input"
-);
-const cardModalImageInput = addCardModal.querySelector(
-  "#add-card-modal-image-link-input"
-);
-const cardModalForm = addCardModal.querySelector("#card-modal-form");
-
-//Picture Modal elements
-const pictureModal = document.querySelector("#picture-modal");
-const pictureModalImage = pictureModal.querySelector("#picture-modal-image");
-const pictureModalTitle = pictureModal.querySelector("#picture-modal-title");
 
 /******************
  * FORM VALIDATORS *
  ******************/
 const profileModalFormValidator = new FormValidator(
   validatorConfig,
-  document.querySelector("#profile-modal-form")
+  document.forms["profile-modal-form"]
 );
 const cardModalFormValidator = new FormValidator(
   validatorConfig,
-  document.querySelector("#card-modal-form")
+  document.forms["card-modal-form"]
 );
 
 profileModalFormValidator.enableValidation();
@@ -69,7 +53,7 @@ cardModalFormValidator.enableValidation();
  * SECTIONS *
  ************/
 const cardSection = new Section(
-  { items: initialCards, renderer: createNewCard },
+  { items: initialCards, renderer: createNewCardEl },
   ".cards__list"
 );
 
@@ -102,49 +86,37 @@ const userInfo = new UserInfo({
 /******************
  * EVENT HANDLERS *
  ******************/
-function handleProfileEditSubmit(e) {
+function handleProfileEditSubmit(e, { title, description }) {
   e.preventDefault();
-  userInfo.setUserInfo(
-    profileModalNameInput.value,
-    profileModalDescriptionInput.value
-  );
+  userInfo.setUserInfo(title, description);
   profilePopup.close();
 }
 
-function handleAddCardModalSubmit(e) {
+function handleAddCardModalSubmit(e, cardData) {
   e.preventDefault();
-  const cardData = {
-    name: cardModalTitleInput.value,
-    link: cardModalImageInput.value,
-  };
-  cardSection.addItem(cardData);
+  cardSection.addItem(createNewCardEl(cardData));
   addCardPopup.close();
 }
 
 function handleCardClick(cardObject) {
-  pictureModalTitle.textContent = cardObject._name;
-  picturePopup.open(cardObject._link, cardObject._name);
+  picturePopup.open(cardObject.link, cardObject.name);
 }
 
 /*************
  * FUNCTIONS *
  *************/
 
-function createNewCard(cardData) {
-  //Creates new card Object
-  const card = new Card(
-    cardData,
-    "#card-template",
-    handleCardClick,
-    handleCardClick
-  );
-  //Adds HTML
-  cardList.insertAdjacentElement("afterbegin", card.getView());
+function createNewCardEl(cardData) {
+  //Creates new card Object and then returns its element
+  const card = new Card(cardData, "#card-template", handleCardClick);
+  return card.getView();
 }
 
 function fillProfileForm() {
-  profileModalNameInput.value = profileTitle.textContent;
-  profileModalDescriptionInput.value = profileDescription.textContent;
+  userInfo.setUserInfo(
+    profileTitle.textContent,
+    profileDescription.textContent
+  );
 }
 
 /*******************
