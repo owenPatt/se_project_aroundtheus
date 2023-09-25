@@ -113,8 +113,9 @@ function createNewCardEl(cardData) {
 }
 
 function fillProfileForm() {
-  profileModalNameInput.value = profileTitle.innerText;
-  profileModalDescriptionInput.value = profileDescription.innerText;
+  const info = userInfo.getUserInfo();
+  profileModalNameInput.value = info.name;
+  profileModalDescriptionInput.value = info.job;
 }
 
 /*******************
