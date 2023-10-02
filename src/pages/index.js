@@ -17,10 +17,7 @@ import UserInfo from "../components/UserInfo.js";
  * ELEMENTS *
  ************/
 //Profile elements
-const profile = document.querySelector("#profile");
-const profileEditBtn = profile.querySelector("#profile-edit-button");
-const profileTitle = profile.querySelector("#profile-title");
-const profileDescription = profile.querySelector("#profile-description");
+const profileEditBtn = document.querySelector("#profile-edit-button");
 
 //profile modal elements
 const profileEditModal = document.querySelector("#profile-edit-modal");
@@ -113,10 +110,9 @@ function createNewCardEl(cardData) {
 }
 
 function fillProfileForm() {
-  userInfo.setUserInfo(
-    profileTitle.textContent,
-    profileDescription.textContent
-  );
+  const info = userInfo.getUserInfo();
+  profileModalNameInput.value = info.name;
+  profileModalDescriptionInput.value = info.job;
 }
 
 /*******************
