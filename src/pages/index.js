@@ -12,6 +12,7 @@ import Section from "../components/Section.js";
 import PopupWithImage from "../components/PopupWithImage.js";
 import PopupWithForm from "../components/PopupWithForm.js";
 import UserInfo from "../components/UserInfo.js";
+import Api from "../components/Api.js";
 
 /************
  * ELEMENTS *
@@ -46,13 +47,31 @@ const cardModalFormValidator = new FormValidator(
 profileModalFormValidator.enableValidation();
 cardModalFormValidator.enableValidation();
 
+/*******
+ * API *
+ *******/
+const token = "c2b0fb8f-5e2c-45d3-9e40-bbe48905b446";
+
+const api = new Api({
+  baseUrl: "https://around-api.en.tripleten-services.com/v1",
+  headers: {
+    authorization: token,
+    "content-type": "application/json",
+  },
+});
+
 /************
  * SECTIONS *
  ************/
-const cardSection = new Section(
-  { items: initialCards, renderer: createNewCardEl },
-  ".cards__list"
-);
+let cardSection;
+
+api.getInitialCards().then((result) => {
+  cardSection = new Section(
+    { items: result, renderer: createNewCardEl },
+    ".cards__list"
+  );
+  cardSection.renderItems();
+});
 
 /**********
  * POPUPS *
@@ -78,6 +97,12 @@ picturePopup.setEventListeners();
 const userInfo = new UserInfo({
   nameSelector: "#profile-title",
   jobSelector: "#profile-description",
+  avatarSelector: "#profile-image",
+});
+
+api.getCurrentUser().then((result) => {
+  userInfo.setUserInfo(result.name, result.about);
+  userInfo.setAvatar(result.avatar);
 });
 
 /******************
@@ -130,11 +155,6 @@ addCardBtn.addEventListener("click", () => {
   cardModalFormValidator.clearValidationErrors();
   addCardPopup.open();
 });
-
-/**********************
- * SETS INITIAL CARDS *
- **********************/
-cardSection.renderItems();
 
 /***********************
  * ENABLES TRANSITIONS *
