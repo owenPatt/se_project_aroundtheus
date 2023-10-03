@@ -28,8 +28,16 @@ export default class Api {
       .catch((err) => console.log(err));
   }
 
-  updateUser() {
-    //Updates the current user's info
+  updateUser(name, about) {
+    //Updates user information
+    fetch(`${this._baseUrl}/users/me`, {
+      method: "PATCH",
+      headers: this._headers,
+      body: JSON.stringify({
+        name: name,
+        about: about,
+      }),
+    });
   }
 
   updateAvatar() {

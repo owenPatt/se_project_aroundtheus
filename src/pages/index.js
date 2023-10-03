@@ -111,6 +111,7 @@ api.getCurrentUser().then((result) => {
 function handleProfileEditSubmit(e, { title, description }) {
   e.preventDefault();
   userInfo.setUserInfo(title, description);
+  api.updateUser(title, description);
   profilePopup.close();
 }
 
