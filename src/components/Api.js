@@ -44,8 +44,16 @@ export default class Api {
     //Updates the current user's avatar
   }
 
-  createCard() {
-    //Creates a new card
+  createCard(name, link) {
+    //Adding a new card
+    fetch(`${this._baseUrl}/cards`, {
+      method: "POST",
+      headers: this._headers,
+      body: JSON.stringify({
+        name: name,
+        link: link,
+      }),
+    });
   }
 
   deleteCard() {

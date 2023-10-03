@@ -118,6 +118,7 @@ function handleProfileEditSubmit(e, { title, description }) {
 function handleAddCardModalSubmit(e, cardData) {
   e.preventDefault();
   cardSection.addItem(createNewCardEl(cardData));
+  api.createCard(cardData.name, cardData.link);
   addCardPopup.close();
 }
 
