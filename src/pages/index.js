@@ -124,23 +124,53 @@ api.getCurrentUser().then((result) => {
  ******************/
 function handleProfileEditSubmit(e, { title, description }) {
   e.preventDefault();
-  userInfo.setUserInfo(title, description);
-  api.updateUser(title, description);
-  profilePopup.close();
+  profilePopup.loading(true);
+  api
+    .updateUser(title, description)
+    .then((res) => res.json())
+    .then((result) => {
+      console.log(result);
+    })
+    .catch((err) => console.log(err))
+    .finally(() => {
+      userInfo.setUserInfo(title, description);
+      profilePopup.loading(false);
+      profilePopup.close();
+    });
 }
 
 function handleAddCardModalSubmit(e, cardData) {
   e.preventDefault();
-  cardSection.addItem(createNewCardEl(cardData));
-  api.createCard(cardData.name, cardData.link);
-  addCardPopup.close();
+  addCardPopup.loading(true);
+  api
+    .createCard(cardData.name, cardData.link)
+    .then((res) => res.json())
+    .then((result) => {
+      console.log(result);
+    })
+    .catch((err) => console.log(err))
+    .finally(() => {
+      cardSection.addItem(createNewCardEl(cardData));
+      addCardPopup.loading(false);
+      addCardPopup.close();
+    });
 }
 
 function handleAvatarModalSubmit(e, { link }) {
   e.preventDefault();
-  userInfo.setAvatar(link);
-  api.updateAvatar(link);
-  avatarModal.close();
+  avatarModal.loading(true);
+  api
+    .updateAvatar(link)
+    .then((res) => res.json())
+    .then((result) => {
+      console.log(result);
+    })
+    .catch((err) => console.log(err))
+    .finally(() => {
+      userInfo.setAvatar(link);
+      avatarModal.loading(false);
+      avatarModal.close();
+    });
 }
 
 function handleCardClick(cardObject) {

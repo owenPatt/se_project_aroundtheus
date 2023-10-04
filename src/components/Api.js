@@ -30,52 +30,37 @@ export default class Api {
 
   updateUser(name, about) {
     //Updates user information
-    fetch(`${this._baseUrl}/users/me`, {
+    return fetch(`${this._baseUrl}/users/me`, {
       method: "PATCH",
       headers: this._headers,
       body: JSON.stringify({
         name: name,
         about: about,
       }),
-    })
-      .then((res) => res.json())
-      .then((result) => {
-        console.log(result);
-      })
-      .catch((err) => console.log(err));
+    });
   }
 
   updateAvatar(avatarUrl) {
     //Updates the current user's avatar
-    fetch(`${this._baseUrl}/users/me/avatar`, {
+    return fetch(`${this._baseUrl}/users/me/avatar`, {
       method: "PATCH",
       headers: this._headers,
       body: JSON.stringify({
         avatar: avatarUrl,
       }),
-    })
-      .then((res) => res.json())
-      .then((result) => {
-        console.log(result);
-      })
-      .catch((err) => console.log(err));
+    });
   }
 
   createCard(name, link) {
     //Adding a new card
-    fetch(`${this._baseUrl}/cards`, {
+    return fetch(`${this._baseUrl}/cards`, {
       method: "POST",
       headers: this._headers,
       body: JSON.stringify({
         name: name,
         link: link,
       }),
-    })
-      .then((res) => res.json())
-      .then((result) => {
-        console.log(result);
-      })
-      .catch((err) => console.log(err));
+    });
   }
 
   deleteCard(cardId) {
