@@ -141,6 +141,15 @@ function handlePopupButtonClick(calledObj) {
   api.deleteCard(calledObj.id);
   deleteCardPopup.close();
 }
+
+function handleLikeBtnClick(calledObj) {
+  if (!calledObj.isLiked()) {
+    api.likeCard(calledObj.id);
+  } else {
+    api.dislikeCard(calledObj.id);
+  }
+  calledObj.setLikeBtnState();
+}
 /*************
  * FUNCTIONS *
  *************/
@@ -151,7 +160,8 @@ function createNewCardEl(cardData) {
     cardData,
     "#card-template",
     handleCardClick,
-    handleDeleteBtnClick
+    handleDeleteBtnClick,
+    handleLikeBtnClick
   );
   return card.getView();
 }

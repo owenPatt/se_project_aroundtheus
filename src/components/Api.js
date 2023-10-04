@@ -79,11 +79,29 @@ export default class Api {
       .catch((err) => console.log(err));
   }
 
-  likeCard() {
+  likeCard(cardId) {
     //Likes a card
+    fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
+      method: "PUT",
+      headers: this._headers,
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        console.log(result);
+      })
+      .catch((err) => console.log(err));
   }
 
-  disLikeCard() {
+  dislikeCard(cardId) {
     //Dislikes a card
+    fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
+      method: "DELETE",
+      headers: this._headers,
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        console.log(result);
+      })
+      .catch((err) => console.log(err));
   }
 }
