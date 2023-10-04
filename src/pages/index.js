@@ -7,8 +7,9 @@ import "./index.css";
 
 import Card from "../components/Card.js";
 import FormValidator from "../components/FormValidator.js";
-import { initialCards, validatorConfig } from "../utils/constants.js";
+import { validatorConfig } from "../utils/constants.js";
 import Section from "../components/Section.js";
+import PopupWithButton from "../components/PopupWithButton.js";
 import PopupWithImage from "../components/PopupWithImage.js";
 import PopupWithForm from "../components/PopupWithForm.js";
 import UserInfo from "../components/UserInfo.js";

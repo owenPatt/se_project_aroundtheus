@@ -35,6 +35,10 @@
   cursor: default;
 }
 
+.modal__container_small {
+  height: 109px;
+}
+
 .modal__picture-container {
   position: relative;
   cursor: default;
