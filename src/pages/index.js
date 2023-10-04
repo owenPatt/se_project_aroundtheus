@@ -9,7 +9,7 @@ import Card from "../components/Card.js";
 import FormValidator from "../components/FormValidator.js";
 import { validatorConfig } from "../utils/constants.js";
 import Section from "../components/Section.js";
-import PopupWithButton from "../components/PopupWithButton.js";
+import PopupConfirm from "../components/PopupConfirm.js";
 import PopupWithImage from "../components/PopupWithImage.js";
 import PopupWithForm from "../components/PopupWithForm.js";
 import UserInfo from "../components/UserInfo.js";
@@ -86,10 +86,15 @@ const addCardPopup = new PopupWithForm(
   handleAddCardModalSubmit
 );
 const picturePopup = new PopupWithImage("#picture-modal");
+const deleteCardPopup = new PopupConfirm(
+  "#card-delete-modal",
+  handlePopupButtonClick
+);
 
 profilePopup.setEventListeners();
 addCardPopup.setEventListeners();
 picturePopup.setEventListeners();
+deleteCardPopup.setEventListeners();
 
 /************
  * USERINFO *
@@ -127,13 +132,27 @@ function handleCardClick(cardObject) {
   picturePopup.open(cardObject.link, cardObject.name);
 }
 
+function handleDeleteBtnClick(calledObj) {
+  deleteCardPopup.open(calledObj);
+}
+
+function handlePopupButtonClick(calledObj) {
+  calledObj.handleDelete();
+  api.deleteCard(calledObj.id);
+  deleteCardPopup.close();
+}
 /*************
  * FUNCTIONS *
  *************/
 
 function createNewCardEl(cardData) {
   //Creates new card Object and then returns its element
-  const card = new Card(cardData, "#card-template", handleCardClick);
+  const card = new Card(
+    cardData,
+    "#card-template",
+    handleCardClick,
+    handleDeleteBtnClick
+  );
   return card.getView();
 }
 

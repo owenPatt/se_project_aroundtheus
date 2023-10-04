@@ -37,7 +37,12 @@ export default class Api {
         name: name,
         about: about,
       }),
-    });
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        console.log(result);
+      })
+      .catch((err) => console.log(err));
   }
 
   updateAvatar() {
@@ -53,11 +58,25 @@ export default class Api {
         name: name,
         link: link,
       }),
-    });
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        console.log(result);
+      })
+      .catch((err) => console.log(err));
   }
 
-  deleteCard() {
+  deleteCard(cardId) {
     //Deletes a card
+    fetch(`${this._baseUrl}/cards/${cardId}`, {
+      method: "DELETE",
+      headers: this._headers,
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        console.log(result);
+      })
+      .catch((err) => console.log(err));
   }
 
   likeCard() {
