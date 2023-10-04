@@ -17,12 +17,19 @@
       </header>
       <main class="content">
         <section class="profile page__section" id="profile">
-          <img
-            class="profile__image"
-            id="profile-image"
-            src="<%=require('./images/jacques-cousteau.jpg')%>"
-            alt="Avatar"
-          />
+          <div class="profile__avatar" id="profile-avatar">
+            <img
+              class="profile__image"
+              id="profile-image"
+              src="<%=require('./images/jacques-cousteau.jpg')%>"
+              alt="Avatar"
+            />
+            <img
+              class="profile__image-pencil"
+              src="<%=require('./images/edit-icon.svg')%>"
+              alt="Edit Icon"
+            />
+          </div>
           <div class="profile__info">
             <h1 class="profile__title" id="profile-title">Jacques Cousteau</h1>
             <button
@@ -102,6 +109,40 @@
       </div>
     </div>
 
+    <div class="modal" id="avatar-modal">
+      <div class="modal__container modal__container_size_medium">
+        <button class="modal__close" id="avatar-modal-close-button"></button>
+        <h2 class="modal__heading">Edit Profile</h2>
+        <form
+          class="modal__form"
+          id="avatar-modal-form"
+          name="avatar-modal-form"
+        >
+          <label>
+            <input
+              type="url"
+              name="link"
+              placeholder="Image Link"
+              class="modal__item"
+              id="avatar-modal-name-input"
+              required
+            />
+            <span
+              class="modal__error"
+              id="avatar-modal-name-input-error"
+            ></span>
+          </label>
+          <button
+            type="submit"
+            class="modal__button"
+            id="avatar-modal-save-button"
+          >
+            Save
+          </button>
+        </form>
+      </div>
+    </div>
+
     <div class="modal" id="card-add-modal">
       <div class="modal__container">
         <button class="modal__close" id="card-modal-close-button"></button>
@@ -157,7 +198,7 @@
     </div>
 
     <div class="modal" id="card-delete-modal">
-      <div class="modal__container modal__container_small">
+      <div class="modal__container modal__container_size_small">
         <button
           class="modal__close"
           id="card-delete-modal-close-button"
@@ -172,6 +213,7 @@
         </button>
       </div>
     </div>
+
     <!-- Templates -->
     <template id="card-template">
       <li class="card">

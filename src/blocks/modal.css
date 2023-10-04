@@ -35,7 +35,11 @@
   cursor: default;
 }
 
-.modal__container_small {
+.modal__container_size_medium {
+  height: 200px;
+}
+
+.modal__container_size_small {
   height: 109px;
 }
 

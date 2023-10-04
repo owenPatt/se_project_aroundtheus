@@ -45,8 +45,20 @@ export default class Api {
       .catch((err) => console.log(err));
   }
 
-  updateAvatar() {
+  updateAvatar(avatarUrl) {
     //Updates the current user's avatar
+    fetch(`${this._baseUrl}/users/me/avatar`, {
+      method: "PATCH",
+      headers: this._headers,
+      body: JSON.stringify({
+        avatar: avatarUrl,
+      }),
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        console.log(result);
+      })
+      .catch((err) => console.log(err));
   }
 
   createCard(name, link) {

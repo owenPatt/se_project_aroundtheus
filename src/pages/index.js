@@ -20,6 +20,7 @@ import Api from "../components/Api.js";
  ************/
 //Profile elements
 const profileEditBtn = document.querySelector("#profile-edit-button");
+const profileAvatar = document.querySelector("#profile-avatar");
 
 //profile modal elements
 const profileEditModal = document.querySelector("#profile-edit-modal");
@@ -44,9 +45,14 @@ const cardModalFormValidator = new FormValidator(
   validatorConfig,
   document.forms["card-modal-form"]
 );
+const avatarModalFormValidator = new FormValidator(
+  validatorConfig,
+  document.forms["avatar-modal-form"]
+);
 
 profileModalFormValidator.enableValidation();
 cardModalFormValidator.enableValidation();
+avatarModalFormValidator.enableValidation();
 
 /*******
  * API *
@@ -85,6 +91,7 @@ const addCardPopup = new PopupWithForm(
   "#card-add-modal",
   handleAddCardModalSubmit
 );
+const avatarModal = new PopupWithForm("#avatar-modal", handleAvatarModalSubmit);
 const picturePopup = new PopupWithImage("#picture-modal");
 const deleteCardPopup = new PopupConfirm(
   "#card-delete-modal",
@@ -93,6 +100,7 @@ const deleteCardPopup = new PopupConfirm(
 
 profilePopup.setEventListeners();
 addCardPopup.setEventListeners();
+avatarModal.setEventListeners();
 picturePopup.setEventListeners();
 deleteCardPopup.setEventListeners();
 
@@ -126,6 +134,13 @@ function handleAddCardModalSubmit(e, cardData) {
   cardSection.addItem(createNewCardEl(cardData));
   api.createCard(cardData.name, cardData.link);
   addCardPopup.close();
+}
+
+function handleAvatarModalSubmit(e, { link }) {
+  e.preventDefault();
+  userInfo.setAvatar(link);
+  api.updateAvatar(link);
+  avatarModal.close();
 }
 
 function handleCardClick(cardObject) {
@@ -186,6 +201,11 @@ addCardBtn.addEventListener("click", () => {
   cardModalFormValidator.setButtonState();
   cardModalFormValidator.clearValidationErrors();
   addCardPopup.open();
+});
+profileAvatar.addEventListener("click", () => {
+  avatarModalFormValidator.setButtonState();
+  avatarModalFormValidator.clearValidationErrors();
+  avatarModal.open();
 });
 
 /***********************
