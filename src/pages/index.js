@@ -188,7 +188,6 @@ function handlePopupButtonClick(calledObj) {
 }
 
 function handleLikeBtnClick(calledObj) {
-  console.log(calledObj.id);
   if (!calledObj.isLiked()) {
     api.likeCard(calledObj.id);
   } else {
