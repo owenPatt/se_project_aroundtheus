@@ -30,7 +30,9 @@ const addCardBtn = document.querySelector("#add-card-button");
 const formValidators = {};
 
 //Grabs all form names
-const { profileFormName, avatarFormName, cardFormName } = formNames;
+const { profileFormName, avatarFormName, addCardFormName } = formNames;
+
+console.log(profileFormName, avatarFormName, addCardFormName);
 
 //Enables validation for each form
 //Adds validators to formValidators object
@@ -236,8 +238,8 @@ profileEditBtn.addEventListener("click", () => {
   profilePopup.open();
 });
 addCardBtn.addEventListener("click", () => {
-  formValidators[cardFormName].setButtonState();
-  formValidators[cardFormName].clearValidationErrors();
+  formValidators[addCardFormName].setButtonState();
+  formValidators[addCardFormName].clearValidationErrors();
   addCardPopup.open();
 });
 profileAvatar.addEventListener("click", () => {

@@ -39,7 +39,7 @@ const validatorConfig = {
 
 const formNames = {
   profileFormName: "profile-modal-form",
-  addCardFormName: "card-add-modal-form",
+  addCardFormName: "card-modal-form",
   avatarFormName: "avatar-modal-form",
 };
 
