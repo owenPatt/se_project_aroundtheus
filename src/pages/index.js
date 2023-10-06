@@ -7,7 +7,7 @@ import "./index.css";
 
 import Card from "../components/Card.js";
 import FormValidator from "../components/FormValidator.js";
-import { validatorConfig } from "../utils/constants.js";
+import { validatorConfig, formNames } from "../utils/constants.js";
 import Section from "../components/Section.js";
 import PopupConfirm from "../components/PopupConfirm.js";
 import PopupWithImage from "../components/PopupWithImage.js";
@@ -27,22 +27,24 @@ const addCardBtn = document.querySelector("#add-card-button");
 /******************
  * FORM VALIDATORS *
  ******************/
-const profileModalFormValidator = new FormValidator(
-  validatorConfig,
-  document.forms["profile-modal-form"]
-);
-const cardModalFormValidator = new FormValidator(
-  validatorConfig,
-  document.forms["card-modal-form"]
-);
-const avatarModalFormValidator = new FormValidator(
-  validatorConfig,
-  document.forms["avatar-modal-form"]
-);
+const formValidators = {};
 
-profileModalFormValidator.enableValidation();
-cardModalFormValidator.enableValidation();
-avatarModalFormValidator.enableValidation();
+//Grabs all form names
+const { profileFormName, avatarFormName, cardFormName } = formNames;
+
+//Enables validation for each form
+//Adds validators to formValidators object
+//Enables validation for each form
+const enableValidation = (config) => {
+  const formList = Array.from(document.querySelectorAll(config.formSelector));
+  formList.forEach((formElement) => {
+    const validator = new FormValidator(config, formElement);
+    const formName = formElement.getAttribute("name");
+    formValidators[formName] = validator;
+    validator.enableValidation();
+  });
+};
+enableValidation(validatorConfig);
 
 /*******
  * API *
@@ -229,18 +231,18 @@ function catchFetchError(err) {
 //Open Modals
 profileEditBtn.addEventListener("click", () => {
   fillProfileForm();
-  profileModalFormValidator.setButtonState();
-  profileModalFormValidator.clearValidationErrors();
+  formValidators[profileFormName].setButtonState();
+  formValidators[profileFormName].clearValidationErrors();
   profilePopup.open();
 });
 addCardBtn.addEventListener("click", () => {
-  cardModalFormValidator.setButtonState();
-  cardModalFormValidator.clearValidationErrors();
+  formValidators[cardFormName].setButtonState();
+  formValidators[cardFormName].clearValidationErrors();
   addCardPopup.open();
 });
 profileAvatar.addEventListener("click", () => {
-  avatarModalFormValidator.setButtonState();
-  avatarModalFormValidator.clearValidationErrors();
+  formValidators[avatarFormName].setButtonState();
+  formValidators[avatarFormName].clearValidationErrors();
   avatarPopup.open();
 });
 

@@ -37,4 +37,10 @@ const validatorConfig = {
   errorMessageClassVisible: "modal__error_visible",
 };
 
-export { initialCards, validatorConfig };
+const formNames = {
+  profileFormName: "profile-modal-form",
+  addCardFormName: "card-add-modal-form",
+  avatarFormName: "avatar-modal-form",
+};
+
+export { initialCards, validatorConfig, formNames };
