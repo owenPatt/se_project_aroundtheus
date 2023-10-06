@@ -9,14 +9,6 @@ export default class Popup {
     }
   };
 
-  loading(yes) {
-    if (yes) {
-      this._submitBtn.textContent = "Saving...";
-    } else {
-      this._submitBtn.textContent = "Save";
-    }
-  }
-
   open() {
     this._popupEl.classList.add("modal_opened");
     document.addEventListener("keydown", this._handleEscClose);
@@ -28,7 +20,6 @@ export default class Popup {
   }
 
   setEventListeners() {
-    this._submitBtn = this._popupEl.querySelector(".modal__button");
     this._popupEl.addEventListener("mousedown", (e) => {
       //Allows the overlay and close button to close the modal
       if (e.target.classList.contains("modal_opened")) {

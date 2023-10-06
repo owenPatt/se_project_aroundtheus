@@ -21,16 +21,6 @@ import Api from "../components/Api.js";
 //Profile elements
 const profileEditBtn = document.querySelector("#profile-edit-button");
 const profileAvatar = document.querySelector("#profile-avatar");
-
-//profile modal elements
-const profileEditModal = document.querySelector("#profile-edit-modal");
-const profileModalNameInput = profileEditModal.querySelector(
-  "#profile-modal-name-input"
-);
-const profileModalDescriptionInput = profileEditModal.querySelector(
-  "#profile-modal-description-input"
-);
-
 //card elements
 const addCardBtn = document.querySelector("#add-card-button");
 
@@ -72,13 +62,16 @@ const api = new Api({
  ************/
 let cardSection;
 
-api.getInitialCards().then((result) => {
-  cardSection = new Section(
-    { items: result, renderer: createNewCardEl },
-    ".cards__list"
-  );
-  cardSection.renderItems();
-});
+api
+  .getInitialCards()
+  .then((result) => {
+    cardSection = new Section(
+      { items: result, renderer: createNewCardEl },
+      ".cards__list"
+    );
+    cardSection.renderItems();
+  })
+  .catch(catchFetchError);
 
 /**********
  * POPUPS *
@@ -110,65 +103,65 @@ deleteCardPopup.setEventListeners();
 
 const userInfo = new UserInfo({
   nameSelector: "#profile-title",
-  jobSelector: "#profile-description",
+  descriptionSelector: "#profile-description",
   avatarSelector: "#profile-image",
 });
 
-api.getCurrentUser().then((result) => {
-  userInfo.setUserInfo(result.name, result.about);
-  userInfo.setAvatar(result.avatar);
-});
+api
+  .getCurrentUser()
+  .then((result) => {
+    userInfo.setUserInfo(result.name, result.about);
+    userInfo.setAvatar(result.avatar);
+  })
+  .catch(catchFetchError);
 
 /******************
  * EVENT HANDLERS *
  ******************/
-function handleProfileEditSubmit(e, { title, description }) {
+function handleProfileEditSubmit(e, { name, description }) {
   e.preventDefault();
-  profilePopup.loading(true);
+  profilePopup.renderLoading(true);
   api
-    .updateUser(title, description)
-    .then((res) => res.json())
-    .then((result) => {
-      console.log(result);
+    .updateUser(name, description)
+    .then(() => {
+      userInfo.setUserInfo(name, description);
     })
-    .catch((err) => console.log(err))
+    .catch(catchFetchError)
     .finally(() => {
-      userInfo.setUserInfo(title, description);
-      profilePopup.loading(false);
+      profilePopup.renderLoading(false);
       profilePopup.close();
     });
 }
 
 function handleAddCardModalSubmit(e, cardData) {
   e.preventDefault();
-  addCardPopup.loading(true);
+  addCardPopup.renderLoading(true);
   api
     .createCard(cardData.name, cardData.link)
-    .then((res) => res.json())
     .then((result) => {
       cardData._id = result._id;
     })
-    .catch((err) => console.log(err))
-    .finally(() => {
+    .then(() => {
       cardSection.addItem(createNewCardEl(cardData));
-      addCardPopup.loading(false);
+    })
+    .catch(catchFetchError)
+    .finally(() => {
+      addCardPopup.renderLoading(false);
       addCardPopup.close();
     });
 }
 
 function handleAvatarModalSubmit(e, { link }) {
   e.preventDefault();
-  avatarModal.loading(true);
+  avatarModal.renderLoading(true);
   api
     .updateAvatar(link)
-    .then((res) => res.json())
-    .then((result) => {
-      console.log(result);
-    })
-    .catch((err) => console.log(err))
-    .finally(() => {
+    .then(() => {
       userInfo.setAvatar(link);
-      avatarModal.loading(false);
+    })
+    .catch(catchFetchError)
+    .finally(() => {
+      avatarModal.renderLoading(false);
       avatarModal.close();
     });
 }
@@ -183,15 +176,15 @@ function handleDeleteBtnClick(calledObj) {
 
 function handlePopupButtonClick(calledObj) {
   calledObj.handleDelete();
-  api.deleteCard(calledObj.id);
+  api.deleteCard(calledObj.id).catch(catchFetchError);
   deleteCardPopup.close();
 }
 
 function handleLikeBtnClick(calledObj) {
   if (!calledObj.isLiked()) {
-    api.likeCard(calledObj.id);
+    api.likeCard(calledObj.id).catch(catchFetchError);
   } else {
-    api.dislikeCard(calledObj.id);
+    api.dislikeCard(calledObj.id).catch(catchFetchError);
   }
   calledObj.setLikeBtnState();
 }
@@ -212,9 +205,11 @@ function createNewCardEl(cardData) {
 }
 
 function fillProfileForm() {
-  const info = userInfo.getUserInfo();
-  profileModalNameInput.value = info.name;
-  profileModalDescriptionInput.value = info.job;
+  profilePopup.setInputValues(userInfo.getUserInfo());
+}
+
+function catchFetchError(err) {
+  console.log(err);
 }
 
 /*******************
