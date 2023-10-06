@@ -84,7 +84,7 @@ const addCardPopup = new PopupWithForm(
   "#card-add-modal",
   handleAddCardModalSubmit
 );
-const avatarModal = new PopupWithForm("#avatar-modal", handleAvatarModalSubmit);
+const avatarPopup = new PopupWithForm("#avatar-modal", handleAvatarModalSubmit);
 const picturePopup = new PopupWithImage("#picture-modal");
 const deleteCardPopup = new PopupConfirm(
   "#card-delete-modal",
@@ -93,7 +93,7 @@ const deleteCardPopup = new PopupConfirm(
 
 profilePopup.setEventListeners();
 addCardPopup.setEventListeners();
-avatarModal.setEventListeners();
+avatarPopup.setEventListeners();
 picturePopup.setEventListeners();
 deleteCardPopup.setEventListeners();
 
@@ -118,52 +118,50 @@ api
 /******************
  * EVENT HANDLERS *
  ******************/
+//Default Popup Submit Function
+function handleSubmit(request, popupInstance) {
+  popupInstance.renderLoading(true);
+  request()
+    .then(() => {
+      popupInstance.close();
+    })
+    .catch(catchFetchError)
+    .finally(() => {
+      popupInstance.renderLoading(false);
+    });
+}
+
+//Adds specifics to the popup submit function based on the popup
+//Profile Popup Submit Handler
 function handleProfileEditSubmit(e, { name, description }) {
   e.preventDefault();
-  profilePopup.renderLoading(true);
-  api
-    .updateUser(name, description)
-    .then(() => {
+  function makeRequest() {
+    return api.updateUser(name, description).then(() => {
       userInfo.setUserInfo(name, description);
-    })
-    .catch(catchFetchError)
-    .finally(() => {
-      profilePopup.renderLoading(false);
-      profilePopup.close();
     });
+  }
+  handleSubmit(makeRequest, profilePopup);
 }
-
+//Add Card Popup Submit Handler
 function handleAddCardModalSubmit(e, cardData) {
   e.preventDefault();
-  addCardPopup.renderLoading(true);
-  api
-    .createCard(cardData.name, cardData.link)
-    .then((result) => {
+  function makeRequest() {
+    return api.createCard(cardData.name, cardData.link).then((result) => {
       cardData._id = result._id;
-    })
-    .then(() => {
       cardSection.addItem(createNewCardEl(cardData));
-    })
-    .catch(catchFetchError)
-    .finally(() => {
-      addCardPopup.renderLoading(false);
-      addCardPopup.close();
     });
+  }
+  handleSubmit(makeRequest, addCardPopup);
 }
-
+//Avatar Popup Submit Handler
 function handleAvatarModalSubmit(e, { link }) {
   e.preventDefault();
-  avatarModal.renderLoading(true);
-  api
-    .updateAvatar(link)
-    .then(() => {
+  function makeRequest() {
+    return api.updateAvatar(link).then(() => {
       userInfo.setAvatar(link);
-    })
-    .catch(catchFetchError)
-    .finally(() => {
-      avatarModal.renderLoading(false);
-      avatarModal.close();
     });
+  }
+  handleSubmit(makeRequest, avatarPopup);
 }
 
 function handleCardClick(cardObject) {
@@ -175,18 +173,31 @@ function handleDeleteBtnClick(calledObj) {
 }
 
 function handlePopupButtonClick(calledObj) {
-  calledObj.handleDelete();
-  api.deleteCard(calledObj.id).catch(catchFetchError);
-  deleteCardPopup.close();
+  api
+    .deleteCard(calledObj.id)
+    .then(() => {
+      calledObj.handleDelete();
+      deleteCardPopup.close();
+    })
+    .catch(catchFetchError);
 }
 
 function handleLikeBtnClick(calledObj) {
   if (!calledObj.isLiked()) {
-    api.likeCard(calledObj.id).catch(catchFetchError);
+    api
+      .likeCard(calledObj.id)
+      .then(() => {
+        calledObj.setLikeBtnState();
+      })
+      .catch(catchFetchError);
   } else {
-    api.dislikeCard(calledObj.id).catch(catchFetchError);
+    api
+      .dislikeCard(calledObj.id)
+      .then(() => {
+        calledObj.setLikeBtnState();
+      })
+      .catch(catchFetchError);
   }
-  calledObj.setLikeBtnState();
 }
 /*************
  * FUNCTIONS *
@@ -230,7 +241,7 @@ addCardBtn.addEventListener("click", () => {
 profileAvatar.addEventListener("click", () => {
   avatarModalFormValidator.setButtonState();
   avatarModalFormValidator.clearValidationErrors();
-  avatarModal.open();
+  avatarPopup.open();
 });
 
 /***********************
