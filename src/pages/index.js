@@ -32,8 +32,6 @@ const formValidators = {};
 //Grabs all form names
 const { profileFormName, avatarFormName, addCardFormName } = formNames;
 
-console.log(profileFormName, avatarFormName, addCardFormName);
-
 //Enables validation for each form
 //Adds validators to formValidators object
 //Enables validation for each form
@@ -224,7 +222,7 @@ function fillProfileForm() {
 }
 
 function catchFetchError(err) {
-  console.log(err);
+  console.error(err);
 }
 
 /*******************

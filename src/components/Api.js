@@ -38,8 +38,6 @@ export default class Api {
     return this._request(`${this._baseUrl}/users/me`, "PATCH", {
       name: name,
       about: about,
-    }).then((result) => {
-      console.log(result);
     });
   }
 
@@ -47,8 +45,6 @@ export default class Api {
     //Updates the current user's avatar
     return this._request(`${this._baseUrl}/users/me/avatar`, "PATCH", {
       avatar: avatarUrl,
-    }).then((result) => {
-      console.log(result);
     });
   }
 
@@ -62,29 +58,16 @@ export default class Api {
 
   deleteCard(cardId) {
     //Deletes a card
-    return this._request(`${this._baseUrl}/cards/${cardId}`, "DELETE").then(
-      (result) => {
-        console.log(result);
-      }
-    );
+    return this._request(`${this._baseUrl}/cards/${cardId}`, "DELETE");
   }
 
   likeCard(cardId) {
     //Likes a card
-    return this._request(`${this._baseUrl}/cards/${cardId}/likes`, "PUT").then(
-      (result) => {
-        console.log(result);
-      }
-    );
+    return this._request(`${this._baseUrl}/cards/${cardId}/likes`, "PUT");
   }
 
   dislikeCard(cardId) {
     //Dislikes a card
-    return this._request(
-      `${this._baseUrl}/cards/${cardId}/likes`,
-      "DELETE"
-    ).then((result) => {
-      console.log(result);
-    });
+    return this._request(`${this._baseUrl}/cards/${cardId}/likes`, "DELETE");
   }
 }
